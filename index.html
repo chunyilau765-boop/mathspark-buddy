@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="MathSpark is an interactive mathematics learning buddy with guided explanations, practice questions, and a calculator.">
+<title>MathSpark | Your Mathematics Buddy</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a30;--panel2:#18233e;--text:#f4f7ff;--muted:#aab6d3;--line:#293656;--mint:#59e1c2;--blue:#7aa7ff;--pink:#ff9bc7;--yellow:#ffd778;--danger:#ff9292;--shadow:0 18px 50px #02061755}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 10% 0%,#1c2a51 0,transparent 30%),radial-gradient(circle at 90% 15%,#30204c 0,transparent 25%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}
+button,input,select{font:inherit}button{cursor:pointer}.wrap{max-width:1180px;margin:auto;padding:24px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:34px}.brand{display:flex;align-items:center;gap:12px;font-weight:850;font-size:1.15rem;letter-spacing:-.03em}.logo{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;color:#071323;background:linear-gradient(135deg,var(--mint),var(--blue));font-size:1.35rem;box-shadow:0 8px 25px #59e1c233}.tag{border:1px solid var(--line);color:var(--muted);padding:7px 12px;border-radius:999px;font-size:.8rem}
+.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:center;margin-bottom:30px}.eyebrow{color:var(--mint);text-transform:uppercase;letter-spacing:.16em;font-weight:800;font-size:.76rem}.hero h1{font-size:clamp(2.4rem,5vw,4.5rem);line-height:1.02;letter-spacing:-.065em;margin:12px 0 18px}.gradient{background:linear-gradient(90deg,var(--mint),var(--blue),var(--pink));color:transparent;background-clip:text}.hero p{max-width:650px;color:var(--muted);font-size:1.08rem}.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.btn{border:0;border-radius:12px;padding:11px 16px;font-weight:750;transition:transform .15s,filter .15s}.btn:hover{transform:translateY(-1px);filter:brightness(1.06)}.primary{background:var(--mint);color:#071323}.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}.hero-art{min-height:250px;border:1px solid #39456a;border-radius:28px;background:linear-gradient(145deg,#192647,#16182f 65%,#2b2042);box-shadow:var(--shadow);padding:24px;position:relative;overflow:hidden}.hero-art:before,.hero-art:after{content:"";position:absolute;border:1px solid #ffffff19;border-radius:50%;width:220px;height:220px;right:-55px;top:-70px}.hero-art:after{width:150px;height:150px;right:10px;top:0}.math-symbol{font-size:4.3rem;font-weight:900;letter-spacing:-.1em;color:var(--mint);position:relative;z-index:1}.art-caption{color:var(--muted);max-width:240px;position:relative;z-index:1}.float-card{position:absolute;right:22px;bottom:20px;background:#0b1020c9;border:1px solid #ffffff24;padding:12px 15px;border-radius:16px;transform:rotate(3deg);font-weight:800}
+.grid{display:grid;grid-template-columns:1.08fr .92fr;gap:20px;align-items:start}.panel{background:linear-gradient(180deg,#141d34f5,#10172bf5);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow)}.panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:15px}.panel h2{margin:0;font-size:1.22rem;letter-spacing:-.025em}.sub{color:var(--muted);font-size:.9rem;margin:5px 0 0}.status{font-size:.75rem;color:var(--mint);border:1px solid #59e1c244;border-radius:999px;padding:4px 9px;white-space:nowrap}
+.chat-log{height:330px;overflow:auto;padding:8px 3px 14px;display:flex;flex-direction:column;gap:13px;scroll-behavior:smooth}.message{max-width:90%;padding:12px 14px;border-radius:16px;white-space:pre-wrap;overflow-wrap:anywhere}.bot{align-self:flex-start;background:#1b2947;border:1px solid #304367;border-bottom-left-radius:5px}.user{align-self:flex-end;background:#d4fff5;color:#102032;border-bottom-right-radius:5px}.message strong{color:var(--mint)}.user strong{color:#102032}.message .small{font-size:.82rem;opacity:.82}.chat-form{display:flex;gap:9px;margin-top:12px}.chat-form input{min-width:0;flex:1;background:#0b1224;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px 13px;outline:none}.chat-form input:focus,.field input:focus,.field select:focus{border-color:var(--mint);box-shadow:0 0 0 3px #59e1c21a}.quick-prompts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.chip{background:#111a2e;color:#c6d5f3;border:1px solid #2d3b5c;border-radius:999px;padding:7px 10px;font-size:.82rem}.chip:hover{border-color:var(--mint);color:var(--mint)}
+.topic-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0}.topic{background:#10182b;border:1px solid var(--line);border-radius:15px;padding:13px;text-align:left;color:var(--text);min-height:92px}.topic:hover,.topic.active{border-color:var(--mint);background:#142b35}.topic .emoji{font-size:1.35rem}.topic b{display:block;margin:4px 0 1px}.topic span:last-child{font-size:.8rem;color:var(--muted)}
+.field{display:flex;flex-direction:column;gap:6px;margin:12px 0}.field label{font-size:.86rem;color:#d6def2;font-weight:700}.field input,.field select{width:100%;background:#0b1224;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:11px;outline:none}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.result{background:#0b1426;border:1px solid #2c3c5d;border-radius:14px;padding:14px;margin-top:12px;min-height:72px;white-space:pre-wrap;overflow-wrap:anywhere}.result.answer{border-color:#3c8c7d;background:#0e2429}.feedback{font-weight:750;margin-top:9px}.correct{color:var(--mint)}.wrong{color:var(--pink)}
+.notice{margin-top:22px;border:1px solid #4a4562;background:#19182b;border-radius:16px;padding:14px 16px;color:#d4cde9;font-size:.88rem}.notice strong{color:var(--yellow)}footer{color:var(--muted);font-size:.82rem;padding:25px 0 10px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.hidden{display:none!important}
+@media(max-width:850px){.hero,.grid{grid-template-columns:1fr}.hero-art{min-height:205px}.chat-log{height:300px}.wrap{padding:16px}.topbar{margin-bottom:22px}}
+@media(max-width:460px){.topic-grid,.two{grid-template-columns:1fr}.hero h1{font-size:2.65rem}.panel{padding:16px}.tag{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <div class="brand"><div class="logo">∑</div><span>MathSpark <span style="color:var(--mint)">BUDDY</span></span></div>
+    <div class="tag">Interactive maths • No LLM API</div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Make maths make sense</div>
+      <h1>Small steps.<br><span class="gradient">Big “aha!”</span></h1>
+      <p>Your friendly mathematics practice space. Explore a topic, follow worked examples, try a question, and learn from your mistakes — at your own pace.</p>
+      <div class="hero-actions">
+        <button class="btn primary" onclick="focusChat()">Ask MathSpark ↗</button>
+        <button class="btn secondary" onclick="document.getElementById('practice').scrollIntoView({behavior:'smooth'})">Try a practice question</button>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="math-symbol">x² + y²</div>
+      <p class="art-caption">Math is not about memorising every answer. It is about understanding the steps.</p>
+      <div class="float-card">✦ Learn · Try · Improve</div>
+    </div>
+  </section>
+
+  <main class="grid">
+    <section class="panel">
+      <div class="panel-head">
+        <div><h2>💬 Ask MathSpark</h2><p class="sub">Ask about a supported maths topic.</p></div>
+        <span class="status">● Ready</span>
+      </div>
+      <div id="chatLog" class="chat-log" aria-live="polite">
+        <div class="message bot">Hi! I’m MathSpark, your maths learning buddy. ✨
+
+I can explain basic algebra, fractions, percentages, linear equations, and geometry; show worked steps; or create practice questions.
+
+<strong>What topic are you working on today?</strong></div>
+      </div>
+      <form id="chatForm" class="chat-form">
+        <input id="chatInput" autocomplete="off" maxlength="500" placeholder="e.g. Explain linear equations simply…" aria-label="Ask a maths question">
+        <button class="btn primary" type="submit">Send</button>
+      </form>
+      <div class="quick-prompts">
+        <button class="chip" data-prompt="Explain algebra simply">Explain algebra</button>
+        <button class="chip" data-prompt="Give me a fractions practice question">Fractions practice</button>
+        <button class="chip" data-prompt="Explain percentages step by step">Percentages</button>
+        <button class="chip" data-prompt="Help me solve 2x + 3 = 11">Solve an equation</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><div><h2>🧭 Choose a learning path</h2><p class="sub">Pick a topic to get started.</p></div></div>
+      <div class="topic-grid">
+        <button class="topic" data-topic="algebra"><span class="emoji">🔤</span><b>Algebra</b><span>Expressions & equations</span></button>
+        <button class="topic" data-topic="fractions"><span class="emoji">🍕</span><b>Fractions</b><span>Parts of a whole</span></button>
+        <button class="topic" data-topic="percentages"><span class="emoji">💯</span><b>Percentages</b><span>Out of one hundred</span></button>
+        <button class="topic" data-topic="geometry"><span class="emoji">📐</span><b>Geometry</b><span>Shapes & area</span></button>
+        <button class="topic" data-topic="linear equations"><span class="emoji">⚖️</span><b>Linear equations</b><span>Find the unknown</span></button>
+        <button class="topic" data-topic="indices"><span class="emoji">🚀</span><b>Indices</b><span>Powers & exponents</span></button>
+      </div>
+      <div class="field"><label for="topicSelect">Topic for a mini lesson</label>
+        <select id="topicSelect">
+          <option value="">Choose a topic…</option><option value="algebra">Algebra</option><option value="fractions">Fractions</option><option value="percentages">Percentages</option><option value="geometry">Geometry</option><option value="linear equations">Linear equations</option><option value="indices">Indices</option>
+        </select>
+      </div>
+      <button class="btn secondary" style="width:100%" id="lessonBtn">Show mini lesson</button>
+      <div id="lessonResult" class="result">Your mini lesson will appear here.</div>
+    </section>
+
+    <section class="panel" id="practice">
+      <div class="panel-head"><div><h2>🎯 Practice corner</h2><p class="sub">Try it yourself before revealing feedback.</p></div><span class="status">Practice</span></div>
+      <div class="field"><label for="practiceTopic">Choose topic</label><select id="practiceTopic"><option value="algebra">Algebra</option><option value="fractions">Fractions</option><option value="percentages">Percentages</option><option value="geometry">Geometry</option><option value="linear equations">Linear equations</option><option value="indices">Indices</option></select></div>
+      <button class="btn primary" id="newQuestion">Generate a question</button>
+      <div id="questionBox" class="result">Click “Generate a question” to begin.</div>
+      <form id="answerForm">
+        <div class="field"><label for="answerInput">Your answer</label><input id="answerInput" autocomplete="off" placeholder="Type your answer (e.g. 4 or 1/2)"></div>
+        <button class="btn secondary" type="submit">Check my answer</button>
+        <button class="btn secondary" type="button" id="hintBtn">Show a hint</button>
+      </form>
+      <div id="feedback" class="result" aria-live="polite">Feedback will appear here.</div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><div><h2>🧮 Quick calculator</h2><p class="sub">For basic arithmetic expressions only.</p></div></div>
+      <div class="field"><label for="calcInput">Expression</label><input id="calcInput" placeholder="e.g. (12 + 8) / 4" autocomplete="off"></div>
+      <button class="btn primary" id="calcBtn">Calculate</button>
+      <div id="calcResult" class="result">Enter an expression using numbers and + − × ÷ or parentheses.</div>
+      <div class="notice"><strong>Learning promise:</strong> MathSpark gives guided learning support. It does not complete a full assignment or exam for you. If a question is outside its supported topics, it will ask you to clarify or recommend asking a teacher.</div>
+    </section>
+  </main>
+  <footer><span>© <span id="year"></span> MathSpark • Built for learning</span><span>Rule-based demo · No LLM API · No account required</span></footer>
+</div>
+<script>
+const lessons = {
+ algebra: {title:"Algebra",text:"Algebra uses letters to represent numbers we do not know yet. For example, x + 3 = 8 means “some number plus 3 equals 8.” To find x, undo the +3 by subtracting 3 from both sides: x + 3 − 3 = 8 − 3, so x = 5. Keep both sides balanced by doing the same operation to each side."},
+ fractions: {title:"Fractions",text:"A fraction shows part of a whole. In 3/4, the bottom number (4) tells you the whole is split into 4 equal parts; the top number (3) tells you how many parts you have. To add fractions with the same denominator, add the numerators: 1/5 + 2/5 = 3/5. Different denominators need a common denominator first."},
+ percentages: {title:"Percentages",text:"Percent means “out of 100.” So 25% = 25/100 = 0.25 = 1/4. To find 20% of 60, convert 20% to 0.20, then multiply: 0.20 × 60 = 12. A useful shortcut for 10% is to divide by 10."},
+ geometry: {title:"Geometry",text:"Geometry studies shapes, angles, lengths and areas. The area of a rectangle is length × width. If a rectangle is 8 cm long and 3 cm wide, its area is 8 × 3 = 24 cm². Remember: perimeter measures the distance around a shape; area measures the surface inside it."},
+ "linear equations": {title:"Linear equations",text:"A linear equation has an unknown, often x, with the variable to the first power. Example: 2x + 3 = 11. Step 1: subtract 3 from both sides, giving 2x = 8. Step 2: divide both sides by 2, giving x = 4. Check: 2(4) + 3 = 11, so the answer works."},
+ indices: {title:"Indices",text:"An index (power or exponent) tells you how many times to multiply a number by itself. For example, 2³ = 2 × 2 × 2 = 8. When multiplying powers with the same base, add the indices: 2² × 2³ = 2⁵. This rule applies when the base is the same."}
+};
+const topicAliases = [
+ ["linear equations",["linear equation","linear equations","equation","solve","unknown"]],
+ ["percentages",["percentage","percentages","percent","%"]],
+ ["fractions",["fraction","fractions","numerator","denominator"]],
+ ["geometry",["geometry","area","perimeter","triangle","rectangle","angle","shape"]],
+ ["indices",["indices","index","exponent","power","powers"]],
+ ["algebra",["algebra","variable","expression","simplify","x +","unknown"]]
+];
+let failedAttempts=0, currentQuestion=null, lastTopic="";
+function detectTopic(text){
+ const t=text.toLowerCase();
+ for(const [topic,words] of topicAliases){if(words.some(w=>t.includes(w))) return topic;}
+ return "";
+}
+function addMessage(text,who="bot"){
+ const el=document.createElement("div");el.className="message "+who;el.textContent=text;
+ document.getElementById("chatLog").appendChild(el);document.getElementById("chatLog").scrollTop=document.getElementById("chatLog").scrollHeight;
+}
+function focusChat(){document.getElementById("chatInput").focus();document.getElementById("chatInput").scrollIntoView({behavior:"smooth",block:"center"});}
+function reply(input){
+ const t=input.toLowerCase().trim();
+ if(!t)return "Please type a maths question or choose a topic to get started.";
+ if(/do my homework|complete my assignment|do this assignment|exam answers|answer my exam|finish my homework/.test(t))return "I can’t complete homework, assignments, or exam answers for you. I can help you understand the topic, work through a similar example, or give you a hint. Which maths topic is this about?";
+ if(/mental health|depressed|relationship|boyfriend|girlfriend|family problem|personal problem/.test(t))return "I’m designed for mathematics learning, so I may not be the right support for a personal issue. Please speak with a trusted adult, teacher, counsellor, or another suitable person. If you want maths help, I’m here for you.";
+ const topic=detectTopic(t);
+ if(/hello|hi there|hey\b|good morning/.test(t))return "Hi! 👋 What maths topic would you like to explore: algebra, fractions, percentages, geometry, linear equations, or indices?";
+ if(/help me|need help|maths|math|mathematics/.test(t)&&!topic)return "Sure — what maths topic do you need help with? You can choose algebra, fractions, percentages, geometry, linear equations, or indices.";
+ if(!topic){failedAttempts++;if(failedAttempts>=2){failedAttempts=0;return "I’m still not sure what you mean after two attempts. Please ask a teacher or mentor for personal guidance. You can also try again using a supported topic: algebra, fractions, percentages, geometry, linear equations, or indices.";}return "Sorry, I don’t quite understand. Could you tell me which maths topic this is about, or try asking in a different way?";}
+ failedAttempts=0;lastTopic=topic;
+ if(/practice|quiz|question|test me/.test(t)){document.getElementById("practiceTopic").value=topic;makeQuestion();document.getElementById("practice").scrollIntoView({behavior:"smooth",block:"start"});return "I’ve prepared a "+topic+" practice question in the Practice Corner. Try it first, then check your answer. You can ask me for a hint if you get stuck.";}
+ if(/step by step|break.*down|solve|how do i|how to/.test(t)&&/2x\s*\+\s*3|2x/.test(t))return "Let’s solve 2x + 3 = 11 step by step.\nStep 1: Subtract 3 from both sides: 2x = 8.\nStep 2: Divide both sides by 2: x = 4.\nStep 3: Check it: 2(4) + 3 = 11.\nYour turn: what would you do first in a similar equation?";
+ if(/step by step|break.*down/.test(t))return lessons[topic].title+" — step by step:\n"+lessons[topic].text+"\n\nTry explaining the first step in your own words. If you share a specific example, I can help with the supported methods.";
+ if(/simple|explain|what is|teach|meaning/.test(t)||topic)return lessons[topic].title+":\n"+lessons[topic].text+"\n\nWould you like a practice question on "+topic+"?";
+ return "I can help with "+lessons[topic].title+". Try asking “Explain "+topic+" simply”, “Break it down step by step”, or “Give me a practice question”.";
+}
+document.getElementById("chatForm").addEventListener("submit",e=>{e.preventDefault();const input=document.getElementById("chatInput"),v=input.value.trim();if(!v)return;addMessage(v,"user");input.value="";addMessage(reply(v),"bot");});
+document.querySelectorAll("[data-prompt]").forEach(b=>b.addEventListener("click",()=>{document.getElementById("chatInput").value=b.dataset.prompt;document.getElementById("chatForm").requestSubmit();}));
+document.querySelectorAll("[data-topic]").forEach(b=>b.addEventListener("click",()=>{document.getElementById("topicSelect").value=b.dataset.topic;document.querySelectorAll("[data-topic]").forEach(x=>x.classList.toggle("active",x===b));showLesson();}));
+function showLesson(){const t=document.getElementById("topicSelect").value,box=document.getElementById("lessonResult");if(!t){box.textContent="Please choose a topic first.";return;}box.textContent=lessons[t].title+"\n\n"+lessons[t].text;}
+document.getElementById("lessonBtn").addEventListener("click",showLesson);
+const questionBank={
+ algebra:[
+  {q:"Solve: x + 7 = 12. What is x?",a:["5"],hint:"Undo +7 by subtracting 7 from both sides.",ex:"x = 12 − 7 = 5."},
+  {q:"Simplify: 3x + 2x",a:["5x"],hint:"These are like terms. Add the coefficients 3 and 2.",ex:"3x + 2x = (3 + 2)x = 5x."},
+  {q:"Solve: x − 4 = 9. What is x?",a:["13"],hint:"Add 4 to both sides.",ex:"x = 9 + 4 = 13."}],
+ fractions:[
+  {q:"Calculate: 1/4 + 2/4. Give a simplified fraction.",a:["3/4","0.75"],hint:"The denominators are the same, so add the top numbers.",ex:"1/4 + 2/4 = 3/4."},
+  {q:"What is 1/2 of 18?",a:["9"],hint:"Half means divide by 2.",ex:"18 ÷ 2 = 9."},
+  {q:"Simplify the fraction 2/4.",a:["1/2"],hint:"Divide the numerator and denominator by 2.",ex:"2/4 = 1/2."}],
+ percentages:[
+  {q:"What is 10% of 80?",a:["8"],hint:"10% means divide by 10.",ex:"80 ÷ 10 = 8."},
+  {q:"A $50 item is discounted by 20%. How much is the discount?",a:["10","$10"],hint:"Find 20% by calculating 0.20 × 50.",ex:"0.20 × 50 = $10."},
+  {q:"Convert 25% to a decimal.",a:["0.25",".25"],hint:"Divide the percentage by 100.",ex:"25 ÷ 100 = 0.25."}],
+ geometry:[
+  {q:"A rectangle is 6 cm long and 4 cm wide. What is its area in cm²?",a:["24","24 cm2","24cm2"],hint:"Area of a rectangle = length × width.",ex:"Area = 6 × 4 = 24 cm²."},
+  {q:"A square has sides of 5 cm. What is its perimeter in cm?",a:["20","20 cm","20cm"],hint:"A square has four equal sides.",ex:"Perimeter = 4 × 5 = 20 cm."},
+  {q:"A triangle has angles 50° and 60°. What is the third angle?",a:["70","70 degrees","70°"],hint:"The angles in a triangle add up to 180°.",ex:"180° − 50° − 60° = 70°."}],
+ "linear equations":[
+  {q:"Solve: 2x + 3 = 11. What is x?",a:["4"],hint:"First subtract 3 from both sides.",ex:"2x = 8, then divide by 2. Therefore x = 4."},
+  {q:"Solve: 3x = 21. What is x?",a:["7"],hint:"Divide both sides by 3.",ex:"x = 21 ÷ 3 = 7."},
+  {q:"Solve: x + 9 = 15. What is x?",a:["6"],hint:"Subtract 9 from both sides.",ex:"x = 15 − 9 = 6."}],
+ indices:[
+  {q:"Calculate: 2³.",a:["8"],hint:"Multiply 2 by itself three times.",ex:"2³ = 2 × 2 × 2 = 8."},
+  {q:"Calculate: 5².",a:["25"],hint:"Square means multiply the number by itself.",ex:"5² = 5 × 5 = 25."},
+  {q:"Simplify: 2² × 2³.",a:["32","2^5","2⁵"],hint:"When multiplying powers with the same base, add the indices.",ex:"2² × 2³ = 2⁵ = 32."}]
+};
+function makeQuestion(){const topic=document.getElementById("practiceTopic").value,bank=questionBank[topic],q=bank[Math.floor(Math.random()*bank.length)];currentQuestion={...q,topic};document.getElementById("questionBox").textContent=topic.toUpperCase()+"\n\n"+q.q;document.getElementById("feedback").textContent="Enter your answer and select “Check my answer”.";document.getElementById("feedback").className="result";document.getElementById("answerInput").value="";}
+document.getElementById("newQuestion").addEventListener("click",makeQuestion);
+document.getElementById("hintBtn").addEventListener("click",()=>{const f=document.getElementById("feedback");if(!currentQuestion){f.textContent="Generate a question first.";return;}f.textContent="Hint: "+currentQuestion.hint;f.className="result";});
+function normalise(s){return s.toLowerCase().replace(/\s/g,"").replace(/[$,]/g,"").replace(/degrees?/g,"°");}
+document.getElementById("answerForm").addEventListener("submit",e=>{e.preventDefault();const f=document.getElementById("feedback"),v=normalise(document.getElementById("answerInput").value);if(!currentQuestion){f.textContent="Generate a question first.";return;}if(!v){f.textContent="Type your answer first.";return;}const ok=currentQuestion.a.some(a=>normalise(a)===v);f.textContent=(ok?"Correct! 🎉 ":"Not quite — keep going. 💡 ")+currentQuestion.ex;f.className="result "+(ok?"answer":"");});
+document.getElementById("calcBtn").addEventListener("click",()=>{
+ const raw=document.getElementById("calcInput").value.trim(),out=document.getElementById("calcResult");
+ if(!raw){out.textContent="Please enter an expression.";return;}
+ if(!/^[0-9+\-*/().\s]+$/.test(raw)){out.textContent="For safety, use only numbers, +, −, ×, ÷, decimal points, and parentheses.";return;}
+ try{const result=Function('"use strict"; return ('+raw+')')();if(typeof result!=="number"||!Number.isFinite(result))throw new Error();out.textContent="Result: "+Number(result.toPrecision(10));}catch{out.textContent="I couldn’t calculate that expression. Check the operators and parentheses, then try again.";}
+});
+document.getElementById("year").textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
